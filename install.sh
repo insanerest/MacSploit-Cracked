@@ -14,6 +14,7 @@ set -o pipefail
 # Trap unexpected exits
 trap 'log "ERROR on line $LINENO: Command \"${BASH_COMMAND}\" failed"; exit 1' ERR
 trap '
+    clear
     log "Script terminated."
     echo -e "\n\n\n\n\n ########## DEBUG INFO #########"
     while IFS= read -r line; do
@@ -101,10 +102,10 @@ main() {
         if [ "$version" != "$robloxVersion" ] && [ "$mChannel" == "preview" ]
         then
             log "Curling: http://setup.rbxcdn.com/mac/arm64/$robloxVersion-RobloxPlayer.zip"
-            #curl "http://setup.rbxcdn.com/mac/arm64/$robloxVersion-RobloxPlayer.zip" -o "./RobloxPlayer.zip"
+            curl "http://setup.rbxcdn.com/mac/arm64/$robloxVersion-RobloxPlayer.zip" -o "./RobloxPlayer.zip"
         else
             log "Curling: http://setup.rbxcdn.com/mac/arm64/$version-RobloxPlayer.zip"
-            #curl "http://setup.rbxcdn.com/mac/arm64/$version-RobloxPlayer.zip" -o "./RobloxPlayer.zip"
+            curl "http://setup.rbxcdn.com/mac/arm64/$version-RobloxPlayer.zip" -o "./RobloxPlayer.zip"
         fi
     else
         if [ "$version" != "$robloxVersion" ] && [ "$mChannel" == "preview" ]
@@ -174,6 +175,7 @@ main() {
 
     mv ./macsploit.dylib "/Applications/Roblox.app/Contents/MacOS/macsploit.dylib"
     ./rewriter
+    codesign --force --deep --sign - "/Applications/Roblox.app/Contents/MacOS/macsploit.dylib"
     mv ./interpose.dylib "/Applications/Roblox.app/Contents/MacOS/interpose.dylib"
     ./insert_dylib "/Applications/Roblox.app/Contents/MacOS/macsploit.dylib" "/Applications/Roblox.app/Contents/MacOS/RobloxPlayer" --strip-codesig --all-yes
     mv "/Applications/Roblox.app/Contents/MacOS/RobloxPlayer_patched" "/Applications/Roblox.app/Contents/MacOS/RobloxPlayer"
@@ -205,8 +207,6 @@ main() {
     rm ./hwid
     echo -e "Done."
     echo -e "Install Complete! Developed by Nexus42 and Cracked by Insanerest!!"
-    echo -e "\n\n\n\n\n ########## DEBUG INFO #########"
-    cat "$LOGFILE"
     exit
 }
 
