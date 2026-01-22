@@ -97,7 +97,7 @@ authenticate() {
         center "\033[33mAlthough you could still install MacSploit,\033[0m"
         center "\033[33myou will not be able to use MacSploit without a VPN.\033[0m"
         center "Do you want to proceed? (Y/N): \c"
-        while read -n 1 -s -r answer; do
+        while read -n 1 -r answer; do
             if [[ "$answer" =~ ^[Yy]$ ]]; then
                 print_title
                 return
@@ -318,7 +318,7 @@ check_permissions() {
         center "\033[91mThis is required since MacSploit runs on top of Rosetta.\033[0m"
         echo
         center "Do you want to install Rosetta? (Y/N): \c"
-        while read -n 1 -s -r answer; do
+        while read -n 1 -r answer; do
             if [[ "$answer" =~ ^[Yy]$ ]]; then
                 echo
                 echo
@@ -361,7 +361,7 @@ check_version() {
         center "\033[33mThanks to update hooks, MacSploit may still function for a few days.\033[0m"
         echo
         center "Do you want to proceed? (Y/N): \c"
-        while read -n 1 -s -r answer; do
+        while read -n 1 -r answer; do
             if [[ "$answer" =~ ^[Yy]$ ]]; then
                 break
             elif [[ "$answer" =~ ^[Nn]$ ]]; then
